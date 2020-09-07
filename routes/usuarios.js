@@ -1,9 +1,11 @@
+/*jshint esversion: 9 */
+
 // Ruta: /api/usuarios
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/valida-campos');
 
-const { getUsuarios, crearUsuario, actualizarUsuario, borrarUsuario } = require('../controllers/usuario');
+const { getUsuarios, crearUsuario, actualizarUsuario, borrarUsuario } = require('../controllers/usuarios');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();

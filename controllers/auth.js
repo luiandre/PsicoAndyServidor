@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 const { response } = require("express");
 const bcryptjs = require('bcryptjs');
 

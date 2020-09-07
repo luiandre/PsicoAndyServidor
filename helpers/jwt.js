@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 const jwt = require('jsonwebtoken');
 
 const generarJWT = (uid) => {
@@ -6,7 +8,7 @@ const generarJWT = (uid) => {
 
         const payload = {
             uid
-        }
+        };
 
         jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: '12h'
@@ -25,4 +27,4 @@ const generarJWT = (uid) => {
 
 module.exports = {
     generarJWT
-}
+};

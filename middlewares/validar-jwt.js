@@ -1,7 +1,9 @@
-const { response } = require("express");
+/*jshint esversion: 9 */
+
+const { response, next } = require("express");
 const jwt = require('jsonwebtoken');
 
-const validarJWT = (req, res = response, next) => {
+const validarJWT = (req, res = response, next = any) => {
 
     const token = req.header('x-token');
 

@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
@@ -7,7 +9,7 @@ const { generarJWT } = require("../helpers/jwt");
 
 const getUsuarios = async(req, res) => {
 
-    const usuarios = await Usuario.find({}, 'nombre apellido email role google activo');
+    const usuarios = await Usuario.find({}, 'nombre apellido email role google activo img');
 
     res.json({
         ok: true,
@@ -51,7 +53,6 @@ const crearUsuario = async(req, res = response) => {
         });
 
     } catch (error) {
-        console.log();
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
@@ -142,4 +143,4 @@ module.exports = {
     crearUsuario,
     actualizarUsuario,
     borrarUsuario
-}
+};
