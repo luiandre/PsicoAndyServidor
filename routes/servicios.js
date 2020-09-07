@@ -17,7 +17,6 @@ router.post('/', [
         validarJWT,
         check('titulo', 'El titulo del servicio es necesario').not().isEmpty(),
         check('detalle', 'El detalle del servicio es necesario').not().isEmpty(),
-        check('img', 'La imagen es necesaria').not().isEmpty(),
         check('fecha', 'La fecha es necesaria').not().isEmpty(),
         check('responsable', 'El responsable debe tener un id valido').isMongoId(),
         validarCampos
@@ -25,10 +24,15 @@ router.post('/', [
     crearServicio);
 
 router.put('/:id', [
-
+        validarJWT,
+        check('titulo', 'El titulo del servicio es necesario').not().isEmpty(),
+        check('detalle', 'El detalle del servicio es necesario').not().isEmpty(),
+        check('fecha', 'La fecha es necesaria').not().isEmpty(),
+        check('responsable', 'El responsable debe tener un id valido').isMongoId(),
+        validarCampos
     ],
     actualizarServicio);
 
-router.delete('/:id', borrarServicio);
+router.delete('/:id', validarJWT, borrarServicio);
 
 module.exports = router;

@@ -17,14 +17,17 @@ router.post('/', [
         validarJWT,
         check('titulo', 'El titulo de la noticia es necesario').not().isEmpty(),
         check('detalle', 'El detalle de la noticia es necesario').not().isEmpty(),
-        check('img', 'La imagen es necesaria').not().isEmpty(),
         check('fecha', 'La fecha es necesaria').not().isEmpty(),
         validarCampos
     ],
     crearNoticia);
 
 router.put('/:id', [
-        validarJWT
+        validarJWT,
+        check('titulo', 'El titulo de la noticia es necesario').not().isEmpty(),
+        check('detalle', 'El detalle de la noticia es necesario').not().isEmpty(),
+        check('fecha', 'La fecha es necesaria').not().isEmpty(),
+        validarCampos
     ],
     actualizarNoticia);
 

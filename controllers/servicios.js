@@ -32,6 +32,8 @@ const crearServicio = async(req, res = response) => {
 
     try {
 
+
+
         const servicioDB = await servicio.save();
 
         res.json({
@@ -47,18 +49,67 @@ const crearServicio = async(req, res = response) => {
     }
 };
 
-const actualizarServicio = (req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'actualizar servicio'
-    });
+const actualizarServicio = async(req, res = response) => {
+    const id = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const servicioDB = await Servicio.findById(id);
+
+        if (!servicioDB) {
+            res.status(404).json({
+                ok: false,
+                msg: 'Servicio no encontrado'
+            });
+        }
+
+        cambiosServicio = {
+            ...req.body,
+            usuario: uid
+        };
+
+        const servicioActualizado = await Servicio.findByIdAndUpdate(id, cambiosServicio, { new: true });
+
+        res.json({
+            ok: true,
+            servicio: servicioActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 };
 
-const borrarServicio = (req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'borrar servicio'
-    });
+const borrarServicio = async(req, res = response) => {
+    const id = req.params.id;
+
+    try {
+
+        const servicioDB = await Servicio.findById(id);
+
+        if (!servicioDB) {
+            res.status(404).json({
+                ok: false,
+                msg: 'Servicio no encontrado'
+            });
+        }
+
+        await Servicio.findByIdAndDelete(id);
+
+        res.json({
+            ok: true,
+            msg: 'Servicio eliminado'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 };
 
 module.exports = {

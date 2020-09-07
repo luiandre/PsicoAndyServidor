@@ -38,18 +38,70 @@ const crearNoticia = async(req, res = response) => {
 
 };
 
-const actualizarNoticia = (req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'actualizar noticia'
-    });
+const actualizarNoticia = async(req, res = response) => {
+
+    const id = req.params.id;
+    const uid = req.uid;
+
+    try {
+
+        const noticiaDB = await Noticia.findById(id);
+
+        if (!noticiaDB) {
+            res.status(404).json({
+                ok: false,
+                msg: 'Noticia no encontrada'
+            });
+        }
+
+        cambiosNoticia = {
+            ...req.body,
+            usuario: uid
+        };
+
+        const noticiaActualizado = await Noticia.findByIdAndUpdate(id, cambiosNoticia, { new: true });
+
+        res.json({
+            ok: true,
+            noticia: noticiaActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
 };
 
-const borrarNoticia = (req, res = response) => {
-    res.json({
-        ok: true,
-        msg: 'borar noticia'
-    });
+const borrarNoticia = async(req, res = response) => {
+
+    const id = req.params.id;
+
+    try {
+
+        const noticiaDB = await Noticia.findById(id);
+
+        if (!noticiaDB) {
+            res.status(404).json({
+                ok: false,
+                msg: 'Noticia no encontrada'
+            });
+        }
+
+        await Noticia.findByIdAndDelete(id);
+
+        res.json({
+            ok: true,
+            msg: 'Noticia eliminada'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 };
 
 module.exports = {
