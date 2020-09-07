@@ -14,6 +14,10 @@ app.use(express.json());
 
 dbConnection();
 
+//Directorio publico
+
+app.use(express.static('public'));
+
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/noticias', require('./routes/noticias'));
 app.use('/api/servicios', require('./routes/servicios'));
