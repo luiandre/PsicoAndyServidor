@@ -22,6 +22,13 @@ const login = async(req, res = response) => {
             });
         }
 
+        if (!usuarioDB.activo) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Email inhabilitado'
+            });
+        }
+
         //Vericiar contaseña
         const validPassword = bcryptjs.compareSync(password, usuarioDB.password);
 
@@ -60,6 +67,13 @@ const googleSignIn = async(req, res = response) => {
         const usuarioDB = await Usuario.findOne({ email });
 
         let usuario;
+
+        if (!usuarioDB.activo) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Email inhabilitado'
+            });
+        }
 
         if (!usuarioDB) {
 

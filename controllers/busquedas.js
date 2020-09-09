@@ -47,7 +47,12 @@ const getDocumentos = async(req, res = response) => {
             data = await Servicio.find({ titulo: regex });
             break;
         case 'usuarios':
-            data = await Usuario.find({ nombre: regex });
+            data = await Usuario.find({
+                $or: [
+                    { nombre: regex },
+                    { apellido: regex }
+                ]
+            });
             break;
         default:
             return res.status(400).json({
