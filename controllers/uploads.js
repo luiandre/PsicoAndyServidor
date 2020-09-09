@@ -87,8 +87,13 @@ const obtenerImagen = (req, res) => {
     if (fs.existsSync(pathImg)) {
         res.sendFile(pathImg);
     } else {
-        const pathImg = path.join(__dirname, `../uploads/no-image-found.jpg`);
-        res.sendFile(pathImg);
+        if (tipo === 'usuarios') {
+            const pathImg = path.join(__dirname, `../uploads/user.jpg`);
+            res.sendFile(pathImg);
+        } else {
+            const pathImg = path.join(__dirname, `../uploads/no-image-found.jpg`);
+            res.sendFile(pathImg);
+        }
     }
 
 

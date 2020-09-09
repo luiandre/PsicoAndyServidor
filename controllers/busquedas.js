@@ -5,7 +5,6 @@ const { response } = require("express");
 const Usuario = require('../models/usuario');
 const Noticia = require('../models/noticia');
 const Servicio = require('../models/servicio');
-const usuario = require("../models/usuario");
 
 const getTodo = async(req, res = response) => {
 

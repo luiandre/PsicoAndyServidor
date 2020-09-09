@@ -9,7 +9,19 @@ const { generarJWT } = require("../helpers/jwt");
 
 const getUsuarios = async(req, res) => {
 
-    const usuarios = await Usuario.find({}, 'nombre apellido email role google activo img');
+    const usuarios = await Usuario.find({}, 'nombre apellido email rol google activo img bio');
+
+    res.json({
+        ok: true,
+        usuarios
+    });
+};
+
+const getUsuariosRol = async(req, res) => {
+
+    const rol = req.body.rol;
+
+    const usuarios = await Usuario.find({ rol }, 'nombre apellido email rol google activo img bio');
 
     res.json({
         ok: true,
@@ -89,7 +101,14 @@ const actualizarUsuario = async(req, res = response) => {
             }
         }
 
-        campos.email = email;
+        if (!usuarioDB.google) {
+            campos.email = email;
+        } else if (usuarioDB.email !== email) {
+            res.status(400).json({
+                ok: false,
+                msg: 'Google maneja el correo del usuario'
+            });
+        }
 
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, { new: true });
 
@@ -140,6 +159,7 @@ const borrarUsuario = async(req, res = response) => {
 
 module.exports = {
     getUsuarios,
+    getUsuariosRol,
     crearUsuario,
     actualizarUsuario,
     borrarUsuario

@@ -33,6 +33,10 @@ const UsuarioSchema = Schema({
     activo: {
         type: Boolean,
         default: true
+    },
+    bio: {
+        type: String,
+        default: '',
     }
 });
 
