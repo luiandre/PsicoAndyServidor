@@ -6,12 +6,21 @@ const Noticia = require('../models/noticia');
 
 const getNoticias = async(req, res = response) => {
 
-    const noticias = await Noticia.find()
-        .populate('usuario', 'nombre apellido');
+    const desde = Number(req.query.desde) || 0;
+
+    const [noticias, total] = await Promise.all([
+        Noticia.find()
+        .populate('usuario', 'nombre apellido')
+        .skip(desde)
+        .limit(5),
+
+        Noticia.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        noticias
+        noticias,
+        total
     });
 };
 

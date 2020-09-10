@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 const { Schema, model } = require('mongoose');
 
 const NoticiaSchema = Schema({
@@ -27,7 +29,7 @@ const NoticiaSchema = Schema({
 NoticiaSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
 
-    object.uid = _id;
+    object.id = _id;
 
     return object;
 });

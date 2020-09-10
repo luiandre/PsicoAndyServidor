@@ -1,3 +1,5 @@
+/*jshint esversion: 9 */
+
 const { Schema, model } = require('mongoose');
 
 const ServicioSchema = Schema({
@@ -32,7 +34,7 @@ const ServicioSchema = Schema({
 ServicioSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
 
-    object.uid = _id;
+    object.id = _id;
 
     return object;
 });
