@@ -63,7 +63,7 @@ const getDocumentos = async(req, res = response) => {
 
     res.json({
         ok: true,
-        respusta: data
+        respuesta: data
     });
 };
 

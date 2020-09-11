@@ -26,6 +26,16 @@ const getUsuarios = async(req, res) => {
     });
 };
 
+const getUsuariosAdministrativos = async(req, res) => {
+
+    const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
+
+    res.json({
+        ok: true,
+        usuarios
+    });
+};
+
 const getUsuariosRol = async(req, res) => {
 
     const rol = req.body.rol;
@@ -136,8 +146,16 @@ const actualizarUsuario = async(req, res = response) => {
 
 const borrarUsuario = async(req, res = response) => {
     const uid = req.params.id;
+    const uidUser = req.uid;
 
     try {
+
+        if (uid === uidUser) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No se puede eliminar a si mismo'
+            });
+        }
 
         const usuarioDB = await Usuario.findById(uid);
 
@@ -171,5 +189,6 @@ module.exports = {
     getUsuariosRol,
     crearUsuario,
     actualizarUsuario,
-    borrarUsuario
+    borrarUsuario,
+    getUsuariosAdministrativos
 };

@@ -13,10 +13,9 @@ const NoticiaSchema = Schema({
     },
     img: {
         type: String,
-        required: true
     },
     fecha: {
-        type: Date,
+        type: Number,
         required: true
     },
     usuario: {

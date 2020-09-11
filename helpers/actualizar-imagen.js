@@ -18,55 +18,59 @@ const actualizarImagen = async(tipo, id, nombreArchivo) => {
 
     let pathViejo = '';
 
-    switch (tipo) {
-        case 'usuarios':
-            const usuario = await Usuario.findById(id);
+    try {
+        switch (tipo) {
+            case 'usuarios':
+                const usuario = await Usuario.findById(id);
 
-            if (!usuario) {
-                return false;
-            }
+                if (!usuario) {
+                    return false;
+                }
 
-            pathViejo = `./uploads/usuarios/${ usuario.img }`;
+                pathViejo = `./uploads/usuarios/${ usuario.img }`;
 
-            borrarImagen(pathViejo);
+                borrarImagen(pathViejo);
 
-            usuario.img = nombreArchivo;
-            usuario.save();
-            return true;
+                usuario.img = nombreArchivo;
+                usuario.save();
+                return true;
 
-        case 'servicios':
+            case 'servicios':
 
-            const servicio = await Servicio.findById(id);
+                const servicio = await Servicio.findById(id);
 
-            if (!servicio) {
-                return false;
-            }
+                if (!servicio) {
+                    return false;
+                }
 
-            pathViejo = `./uploads/servicios/${ servicio.img }`;
+                pathViejo = `./uploads/servicios/${ servicio.img }`;
 
-            borrarImagen(pathViejo);
+                borrarImagen(pathViejo);
 
-            servicio.img = nombreArchivo;
-            servicio.save();
-            return true;
-        case 'noticias':
+                servicio.img = nombreArchivo;
+                servicio.save();
+                return true;
+            case 'noticias':
 
-            const noticia = await Noticia.findById(id);
+                const noticia = await Noticia.findById(id);
 
-            if (!noticia) {
-                return false;
-            }
+                if (!noticia) {
+                    return false;
+                }
 
-            pathViejo = `./uploads/noticias/${ noticia.img }`;
+                pathViejo = `./uploads/noticias/${ noticia.img }`;
 
-            borrarImagen(pathViejo);
+                borrarImagen(pathViejo);
 
-            noticia.img = nombreArchivo;
-            noticia.save();
-            return true;
+                noticia.img = nombreArchivo;
+                noticia.save();
+                return true;
 
-        default:
-            break;
+            default:
+                break;
+        }
+    } catch (error) {
+        return false;
     }
 
 };

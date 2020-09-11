@@ -25,14 +25,37 @@ const getServicios = async(req, res = response) => {
     });
 };
 
+const getServicio = async(req, res = response) => {
+
+    const id = req.params.id;
+
+    try {
+
+        const servicioDB = await Servicio.findById(id)
+            .populate('usuario', 'nombre apellido img')
+            .populate('responsable', 'nombre apellido img');
+
+        res.json({
+            ok: true,
+            servicio: servicioDB
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
+};
+
 const crearServicio = async(req, res = response) => {
 
     const uid = req.uid;
     const servicio = new Servicio({ usuario: uid, ...req.body });
 
     try {
-
-
 
         const servicioDB = await servicio.save();
 
@@ -116,5 +139,6 @@ module.exports = {
     getServicios,
     crearServicio,
     actualizarServicio,
-    borrarServicio
+    borrarServicio,
+    getServicio
 };

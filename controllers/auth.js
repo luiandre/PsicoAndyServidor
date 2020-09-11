@@ -68,11 +68,13 @@ const googleSignIn = async(req, res = response) => {
 
         let usuario;
 
-        if (!usuarioDB.activo) {
-            return res.status(404).json({
-                ok: false,
-                msg: 'Email inhabilitado'
-            });
+        if (usuarioDB) {
+            if (!usuarioDB.activo) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: 'Email inhabilitado'
+                });
+            }
         }
 
         if (!usuarioDB) {

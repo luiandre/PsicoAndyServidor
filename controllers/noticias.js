@@ -24,6 +24,30 @@ const getNoticias = async(req, res = response) => {
     });
 };
 
+const getNoticia = async(req, res = response) => {
+
+    const id = req.params.id;
+
+    try {
+
+        const noticiaDB = await Noticia.findById(id)
+            .populate('usuario', 'nombre apellido img');
+
+        res.json({
+            ok: true,
+            noticia: noticiaDB
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
+};
+
 const crearNoticia = async(req, res = response) => {
 
     const uid = req.uid;
@@ -117,5 +141,6 @@ module.exports = {
     getNoticias,
     crearNoticia,
     actualizarNoticia,
-    borrarNoticia
+    borrarNoticia,
+    getNoticia
 };
