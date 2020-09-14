@@ -7,7 +7,7 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/valida-campos');
 
 const { getNoticias, getNoticia, crearNoticia, actualizarNoticia, borrarNoticia } = require('../controllers/noticias');
-const { validarJWT } = require('../middlewares/validar-jwt');
+const { validarJWT, validarAdminProfRol } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
@@ -17,6 +17,7 @@ router.get('/:id', validarJWT, getNoticia);
 
 router.post('/', [
         validarJWT,
+        validarAdminProfRol,
         check('titulo', 'El titulo de la noticia es necesario').not().isEmpty(),
         check('detalle', 'El detalle de la noticia es necesario').not().isEmpty(),
         check('fecha', 'La fecha es necesaria').not().isEmpty(),
@@ -26,6 +27,7 @@ router.post('/', [
 
 router.put('/:id', [
         validarJWT,
+        validarAdminProfRol,
         check('titulo', 'El titulo de la noticia es necesario').not().isEmpty(),
         check('detalle', 'El detalle de la noticia es necesario').not().isEmpty(),
         check('fecha', 'La fecha es necesaria').not().isEmpty(),
@@ -33,6 +35,6 @@ router.put('/:id', [
     ],
     actualizarNoticia);
 
-router.delete('/:id', validarJWT, borrarNoticia);
+router.delete('/:id', validarJWT, validarAdminProfRol, borrarNoticia);
 
 module.exports = router;
