@@ -10,11 +10,12 @@ const { getMenuFrontEnd } = require("../helpers/menu-frontend");
 const getUsuarios = async(req, res) => {
 
     const desde = Number(req.query.desde) || 0;
+    const hasta = Number(req.query.hasta) || 0;
 
     const [usuarios, total] = await Promise.all([
         Usuario.find({}, 'nombre apellido email rol google activo img bio')
         .skip(desde)
-        .limit(5),
+        .limit(hasta),
 
         Usuario.countDocuments()
     ]);

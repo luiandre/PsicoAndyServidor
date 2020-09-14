@@ -102,7 +102,7 @@ const validarAdminProfRol = async(req, res = response, next = any) => {
 
     try {
 
-        const usuarioDB = await Usuario.findById(uis);
+        const usuarioDB = await Usuario.findById(uid);
 
         if (!usuarioDB) {
             return res.status(404).json({
@@ -111,14 +111,15 @@ const validarAdminProfRol = async(req, res = response, next = any) => {
             });
         }
 
-        if (usuarioDB.rol !== 'ADMIN_ROL' || usuarioDB.rol !== 'PROF_ROL') {
+        if (usuarioDB.rol === 'ADMIN_ROL' || usuarioDB.rol === 'PROF_ROL') {
+            next();
+        } else {
             return res.status(403).json({
                 ok: false,
                 msg: 'No tiene los permisos requeridos'
             });
         }
 
-        next();
     } catch (error) {
         return res.status(500).json({
             ok: false,

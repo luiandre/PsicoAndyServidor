@@ -7,12 +7,13 @@ const Noticia = require('../models/noticia');
 const getNoticias = async(req, res = response) => {
 
     const desde = Number(req.query.desde) || 0;
+    const hasta = Number(req.query.hasta) || 0;
 
     const [noticias, total] = await Promise.all([
         Noticia.find()
         .populate('usuario', 'nombre apellido')
         .skip(desde)
-        .limit(5),
+        .limit(hasta),
 
         Noticia.countDocuments()
     ]);

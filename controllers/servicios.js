@@ -6,6 +6,7 @@ const Servicio = require('../models/servicio');
 const getServicios = async(req, res = response) => {
 
     const desde = Number(req.query.desde) || 0;
+    const hasta = Number(req.query.hasta) || 0;
 
 
     const [servicios, total] = await Promise.all([
@@ -13,7 +14,7 @@ const getServicios = async(req, res = response) => {
         .populate('usuario', 'nombre apellido img')
         .populate('responsable', 'nombre apellido img')
         .skip(desde)
-        .limit(5),
+        .limit(hasta),
 
         Servicio.countDocuments()
     ]);
@@ -61,7 +62,7 @@ const crearServicio = async(req, res = response) => {
 
         res.json({
             ok: true,
-            noticia: servicioDB
+            servicio: servicioDB
         });
 
     } catch (error) {
