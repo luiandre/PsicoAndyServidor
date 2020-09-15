@@ -1,63 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>PsicoAndy M&D</title>
-    <base href="/">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="642190532508-rckbg2ukr58g0a44cqqntrvsntsqa0f8.apps.googleusercontent.com">
 
-    <script src="https://apis.google.com/js/platform.js"></script>
+    <title>Document</title>
+</head>
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+<body>
+    <h1>Google Sign-in</h1>
 
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="./assets/plugins/bootstrap/css/bootstrap.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- You can change the theme colors from here -->
-    <link rel="stylesheet" href="./assets/css/colors/default-dark.css" id="theme">
+    <a href="#" onclick="signOut();">Sign out</a>
 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<link rel="stylesheet" href="styles.5b4eb9be43c8be630a13.css"></head>
+    <script>
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log(id_token);
+        }
 
-<body class="fix-header card-no-border fix-sidebar">
-
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader__figure"></div>
-            <p class="loader__label">Cargando...</p>
-        </div>
-    </div>
-
-    <app-root></app-root>
-
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="./assets/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="./assets/plugins/bootstrap/js/popper.min.js"></script>
-    <script src="./assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="./assets/js/perfect-scrollbar.jquery.min.js"></script>
-    <!--Wave Effects -->
-    <script src="./assets/js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="./assets/js/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="./assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <script src="./assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="./assets/js/custom.js"></script>
-<script src="runtime-es2015.053f2d80be18230662cc.js" type="module"></script><script src="runtime-es5.053f2d80be18230662cc.js" nomodule defer></script><script src="polyfills-es5.177e85a9724683782539.js" nomodule defer></script><script src="polyfills-es2015.f332a089ad1600448873.js" type="module"></script><script src="main-es2015.5b4d82c93cf5bf267045.js" type="module"></script><script src="main-es5.5b4d82c93cf5bf267045.js" nomodule defer></script></body>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function() {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+</body>
 
 </html>
