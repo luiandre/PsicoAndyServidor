@@ -9,20 +9,29 @@ const getNoticias = async(req, res = response) => {
     const desde = Number(req.query.desde) || 0;
     const hasta = Number(req.query.hasta) || 0;
 
-    const [noticias, total] = await Promise.all([
-        Noticia.find()
-        .populate('usuario', 'nombre apellido')
-        .skip(desde)
-        .limit(hasta),
+    try {
+        const [noticias, total] = await Promise.all([
+            Noticia.find()
+            .populate('usuario', 'nombre apellido')
+            .skip(desde)
+            .limit(hasta),
 
-        Noticia.countDocuments()
-    ]);
+            Noticia.countDocuments()
+        ]);
 
-    res.json({
-        ok: true,
-        noticias,
-        total
-    });
+        res.json({
+            ok: true,
+            noticias,
+            total
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
 };
 
 const getNoticia = async(req, res = response) => {

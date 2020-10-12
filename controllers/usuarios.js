@@ -7,51 +7,131 @@ const Usuario = require('../models/usuario');
 const { generarJWT } = require("../helpers/jwt");
 const { getMenuFrontEnd } = require("../helpers/menu-frontend");
 
+const getUsuario = async(req, res = response) => {
+
+    const id = req.params.id;
+
+
+    try {
+
+        const usuarioDB = await Usuario.findById(id);
+
+        res.json({
+            ok: true,
+            usuario: usuarioDB
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+};
+
 const getUsuarios = async(req, res) => {
+    try {
+        const desde = Number(req.query.desde) || 0;
+        const hasta = Number(req.query.hasta) || 0;
 
-    const desde = Number(req.query.desde) || 0;
-    const hasta = Number(req.query.hasta) || 0;
+        const [usuarios, total] = await Promise.all([
+            Usuario.find({}, 'nombre apellido email rol google activo img bio estado pendiente')
+            .skip(desde)
+            .limit(hasta),
 
-    const [usuarios, total] = await Promise.all([
-        Usuario.find({}, 'nombre apellido email rol google activo img bio')
-        .skip(desde)
-        .limit(hasta),
+            Usuario.countDocuments()
+        ]);
 
-        Usuario.countDocuments()
-    ]);
+        res.json({
+            ok: true,
+            usuarios,
+            total
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 
-    res.json({
-        ok: true,
-        usuarios,
-        total
-    });
+
 };
 
 const getUsuariosAdministrativos = async(req, res) => {
 
-    const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
+    try {
+        const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
 
-    res.json({
-        ok: true,
-        usuarios
-    });
+        res.json({
+            ok: true,
+            usuarios
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const getUsuariosFiltroRol = async(req, res) => {
+
+    const rolUsuario = req.params.rol;
+
+    try {
+        if (rolUsuario == 'USER_ROL') {
+            const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
+            return res.json({
+                ok: true,
+                usuarios
+            });
+        } else if (rolUsuario == 'ADMIN_ROL' || rolUsuario == 'PROF_ROL') {
+            const usuarios = await Usuario.find();
+            return res.json({
+                ok: true,
+                usuarios
+            });
+        } else {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'Rol no permitido'
+            });
+        }
+
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 };
 
 const getUsuariosRol = async(req, res) => {
 
     const rol = req.body.rol;
 
-    const usuarios = await Usuario.find({ rol }, 'nombre apellido email rol google activo img bio');
+    try {
 
-    res.json({
-        ok: true,
-        usuarios
-    });
+        const usuarios = await Usuario.find({ rol }, 'nombre apellido email rol google activo img bio estado pendiente');
+
+        res.json({
+            ok: true,
+            usuarios
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
 };
 
 const crearUsuario = async(req, res = response) => {
 
-    const { nombre, apellido, email, password } = req.body;
+    const { email, password } = req.body;
 
     try {
 
@@ -192,5 +272,7 @@ module.exports = {
     crearUsuario,
     actualizarUsuario,
     borrarUsuario,
-    getUsuariosAdministrativos
+    getUsuariosAdministrativos,
+    getUsuario,
+    getUsuariosFiltroRol,
 };

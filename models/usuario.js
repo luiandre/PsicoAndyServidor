@@ -22,6 +22,7 @@ const UsuarioSchema = Schema({
     },
     img: {
         type: String,
+        default: 'no-image'
     },
     rol: {
         type: String,
@@ -39,7 +40,11 @@ const UsuarioSchema = Schema({
     bio: {
         type: String,
         default: '',
-    }
+    },
+    estado: {
+        type: Boolean,
+        default: true
+    },
 });
 
 UsuarioSchema.method('toJSON', function() {

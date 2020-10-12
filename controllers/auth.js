@@ -121,21 +121,85 @@ const renewToken = async(req, res = response) => {
 
     const uid = req.uid;
 
-    //Generar token
-    const token = await generarJWT(uid);
+    try {
+        //Generar token
+        const token = await generarJWT(uid);
 
-    const usuarioDB = await Usuario.findById(uid);
+        const usuarioDB = await Usuario.findById(uid);
 
-    res.json({
-        ok: true,
-        token,
-        usuario: usuarioDB,
-        menu: getMenuFrontEnd(usuarioDB.rol)
-    });
+        res.json({
+            ok: true,
+            token,
+            usuario: usuarioDB,
+            menu: getMenuFrontEnd(usuarioDB.rol)
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+};
+
+const activarEstado = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: true }, { new: true });
+
+        res.json({
+            ok: true,
+            usuario: usuarioActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const desactivarEstado = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+
+        res.json({
+            ok: true,
+            usuario: usuarioActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
 };
 
 module.exports = {
     login,
     googleSignIn,
-    renewToken
+    renewToken,
+    activarEstado,
+    desactivarEstado
 };

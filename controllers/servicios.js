@@ -8,22 +8,31 @@ const getServicios = async(req, res = response) => {
     const desde = Number(req.query.desde) || 0;
     const hasta = Number(req.query.hasta) || 0;
 
+    try {
 
-    const [servicios, total] = await Promise.all([
-        Servicio.find()
-        .populate('usuario', 'nombre apellido img')
-        .populate('responsable', 'nombre apellido img')
-        .skip(desde)
-        .limit(hasta),
+        const [servicios, total] = await Promise.all([
+            Servicio.find()
+            .populate('usuario', 'nombre apellido img')
+            .populate('responsable', 'nombre apellido img')
+            .skip(desde)
+            .limit(hasta),
 
-        Servicio.countDocuments()
-    ]);
+            Servicio.countDocuments()
+        ]);
 
-    res.json({
-        ok: true,
-        servicios,
-        total
-    });
+        res.json({
+            ok: true,
+            servicios,
+            total
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
 };
 
 const getServicio = async(req, res = response) => {
