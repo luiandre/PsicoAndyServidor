@@ -45,6 +45,10 @@ const UsuarioSchema = Schema({
         type: Boolean,
         default: true
     },
+    conexiones: {
+        type: Number,
+        default: 0
+    }
 });
 
 UsuarioSchema.method('toJSON', function() {

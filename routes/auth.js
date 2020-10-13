@@ -9,7 +9,9 @@ const {
     googleSignIn,
     renewToken,
     activarEstado,
-    desactivarEstado
+    desactivarEstado,
+    sumarConexion,
+    restarConexion
 } = require('../controllers/auth');
 
 const { check } = require('express-validator');
@@ -41,5 +43,8 @@ router.get('/renew', [
 
 router.put('/activar/:id', activarEstado);
 router.put('/desactivar/:id', desactivarEstado);
+
+router.put('/sumar/:id', sumarConexion);
+router.put('/restar/:id', restarConexion);
 
 module.exports = router;

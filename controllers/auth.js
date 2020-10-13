@@ -182,7 +182,69 @@ const desactivarEstado = async(req, res) => {
             });
         }
 
-        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+        if (usuarioDB.conexiones == 0) {
+            const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+
+            res.json({
+                ok: true,
+                usuario: usuarioActualizado
+            });
+        } else {
+            res.json({
+                ok: true,
+                mensaje: 'Usuario aun conectado'
+            });
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const sumarConexion = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { conexiones: usuarioDB.conexiones + 1 }, { new: true });
+
+        res.json({
+            ok: true,
+            usuario: usuarioActualizado
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const restarConexion = async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const usuarioDB = await Usuario.findById(id);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { conexiones: usuarioDB.conexiones - 1 }, { new: true });
 
         res.json({
             ok: true,
@@ -201,5 +263,7 @@ module.exports = {
     googleSignIn,
     renewToken,
     activarEstado,
-    desactivarEstado
+    desactivarEstado,
+    sumarConexion,
+    restarConexion
 };
