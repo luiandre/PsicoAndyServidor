@@ -115,10 +115,31 @@ const desactivarPentiente = async(req, res) => {
     }
 };
 
+const obtenerUltimomensajeRecibido = async(req, res) => {
+    const para = req.uid;
+    const de = req.params.uid;
+
+    try {
+        const mensajeDB = await Mensaje.find({ '$and': [{ 'para': para }, { 'de': de }] })
+            .sort({ $natural: -1 }).limit(1);
+
+        res.json({
+            ok: true,
+            mensaje: mensajeDB
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+};
 
 module.exports = {
     crearMensaje,
     obtenerMensajes,
     desactivarPentiente,
-    activarPentiente
+    activarPentiente,
+    obtenerUltimomensajeRecibido
 };

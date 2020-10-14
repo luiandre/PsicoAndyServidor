@@ -76,7 +76,56 @@ const getDocumentos = async(req, res = response) => {
     });
 };
 
+const getUsuariosBusquedaRol = async(req, res) => {
+
+    const rolUsuario = req.params.rol;
+    const busqueda = req.params.busqueda;
+    const regex = new RegExp(busqueda, 'i');
+
+    const filtro = {
+        '$and': [{
+            '$or': [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }]
+        }, {
+            $or: [{ nombre: regex }, { apellido: regex }]
+        }]
+    };
+
+    try {
+        if (rolUsuario == 'USER_ROL') {
+            const usuarios = await Usuario.find(filtro);
+            return res.json({
+                ok: true,
+                usuarios
+            });
+        } else if (rolUsuario == 'ADMIN_ROL' || rolUsuario == 'PROF_ROL') {
+            const usuarios = await Usuario.find({
+                $or: [
+                    { nombre: regex },
+                    { apellido: regex }
+                ]
+            });
+            return res.json({
+                ok: true,
+                usuarios
+            });
+        } else {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'Rol no permitido'
+            });
+        }
+
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
 module.exports = {
     getTodo,
-    getDocumentos
+    getDocumentos,
+    getUsuariosBusquedaRol
 };

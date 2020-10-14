@@ -4,12 +4,13 @@
 
 const { Router } = require('express');
 
-const { getTodo, getDocumentos } = require('../controllers/busquedas');
+const { getTodo, getDocumentos, getUsuariosBusquedaRol } = require('../controllers/busquedas');
 
 const router = Router();
 
 router.get('/:busqueda', getTodo);
 router.get('/coleccion/:tabla/:busqueda', getDocumentos);
+router.get('/usuariosChat/:rol/:busqueda', getUsuariosBusquedaRol);
 
 
 
