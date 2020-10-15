@@ -189,7 +189,40 @@ const actualizarUsuario = async(req, res = response) => {
         }
 
         //Actualizar
-        const { password, google, email, ...campos } = req.body;
+        const { password, google, email, anterior, nueva, repetir, ...campos } = req.body;
+
+        if (anterior) {
+            if (!nueva) {
+                return res.status(400).json({
+                    ok: false,
+                    msg: 'Debe ingresar una nueva contraseña'
+                });
+            } else {
+                if (nueva == repetir) {
+
+                    const validPassword = bcryptjs.compareSync(anterior, usuarioDB.password);
+
+                    if (!validPassword) {
+                        return res.status(400).json({
+                            ok: false,
+                            msg: 'Contraseña no valido'
+                        });
+                    }
+
+                    // Encriptar contraseña
+
+                    const salt = bcryptjs.genSaltSync();
+
+                    campos.password = bcryptjs.hashSync(nueva, salt);
+
+                } else {
+                    return res.status(400).json({
+                        ok: false,
+                        msg: 'Verifique que la nueva contraseña y la reptida sean las mismas'
+                    });
+                }
+            }
+        }
 
         if (usuarioDB.email !== email) {
             const existeEmail = await Usuario.findOne({ email });

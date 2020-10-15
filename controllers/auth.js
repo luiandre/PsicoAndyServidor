@@ -2,6 +2,8 @@
 
 const { response } = require("express");
 const bcryptjs = require('bcryptjs');
+const generator = require('generate-password');
+const nodemailer = require("nodemailer");
 
 const Usuario = require('../models/usuario');
 const { generarJWT } = require("../helpers/jwt");
@@ -30,7 +32,7 @@ const login = async(req, res = response) => {
             });
         }
 
-        //Vericiar contaseña
+        //Verificar contaseña
         const validPassword = bcryptjs.compareSync(password, usuarioDB.password);
 
         if (!validPassword) {
@@ -258,6 +260,89 @@ const restarConexion = async(req, res) => {
     }
 };
 
+const recuperarPassword = async(req, res) => {
+    const { email } = req.body;
+
+    try {
+        const usuarioDB = await Usuario.findOne({ email });
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario registrado con ese correo'
+            });
+        }
+
+        const password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+
+        // Encriptar contraseña
+
+        const salt = bcryptjs.genSaltSync();
+
+        encryptPassword = bcryptjs.hashSync(password, salt);
+
+        const data = {
+            password: encryptPassword
+        };
+
+        await Usuario.findByIdAndUpdate(usuarioDB._id, data);
+
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'psicoandymd@gmail.com',
+                pass: 'psicoandy2020'
+            }
+        });
+
+        var mailOptions = {
+            from: 'psicoandymd@gmail.com',
+            to: email,
+            subject: 'Restablecimiento de Contraseña',
+            text: `Se ha solicitado un restablecimeinto de contraseña a este correo.`,
+            html: `<br>
+            <img src="https://www.facebook.com/psicoandymotivacionydesarrollo/photos/a.494842604038717/1228155190707451/">
+            <br>
+            <br>
+            <strong>Nueva Contraseña</strong>
+            <br>
+            <br>
+            Su nueva contraseña es ${password}.
+            <br>
+            <br>
+            Por su seguridad, cambie su contraseña
+            <br>
+            <br>
+            Si usted no solició este servicio, contacte con soporte técnico mediante este corre electronico.
+            `
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+                res.status(500).json({
+                    ok: false,
+                    msg: 'Un error ha ocurrido'
+                });
+            } else {
+                res.json({
+                    ok: true,
+                    mensaje: 'Se ha actualizado el usuario'
+                });
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
 module.exports = {
     login,
     googleSignIn,
@@ -265,5 +350,6 @@ module.exports = {
     activarEstado,
     desactivarEstado,
     sumarConexion,
-    restarConexion
+    restarConexion,
+    recuperarPassword
 };

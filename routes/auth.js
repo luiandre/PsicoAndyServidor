@@ -11,7 +11,8 @@ const {
     activarEstado,
     desactivarEstado,
     sumarConexion,
-    restarConexion
+    restarConexion,
+    recuperarPassword
 } = require('../controllers/auth');
 
 const { check } = require('express-validator');
@@ -46,5 +47,7 @@ router.put('/desactivar/:id', desactivarEstado);
 
 router.put('/sumar/:id', sumarConexion);
 router.put('/restar/:id', restarConexion);
+
+router.put('/recuperar', recuperarPassword);
 
 module.exports = router;
