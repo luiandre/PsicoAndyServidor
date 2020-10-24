@@ -44,6 +44,9 @@ io.on('connection', (socket) => {
         io.emit('nuevo-eliminada', data);
     });
 
+    socket.on('stream', (data) => {
+        io.emit('nuevo-stream', data);
+    });
 
 });
 
