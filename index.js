@@ -35,6 +35,14 @@ io.on('connection', (socket) => {
         io.emit('nuevo-usuarios', usuarios);
     });
 
+    // Videollamada
+    socket.on('guardar-llamada', (data) => {
+        io.emit('nuevo-llamada', data);
+    });
+
+    socket.on('sala-eliminada', (data) => {
+        io.emit('nuevo-eliminada', data);
+    });
 
 
 });
@@ -46,6 +54,7 @@ app.use(express.static('public'));
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/noticias', require('./routes/noticias'));
 app.use('/api/servicios', require('./routes/servicios'));
+app.use('/api/salas', require('./routes/salas'));
 app.use('/api/mensajes', require('./routes/mensajes'));
 app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/login', require('./routes/auth'));

@@ -4,6 +4,7 @@ const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
+const Mensaje = require('../models/mensaje');
 const { generarJWT } = require("../helpers/jwt");
 const { getMenuFrontEnd } = require("../helpers/menu-frontend");
 
@@ -88,6 +89,7 @@ const getUsuariosFiltroRol = async(req, res) => {
             });
         } else if (rolUsuario == 'ADMIN_ROL' || rolUsuario == 'PROF_ROL') {
             const usuarios = await Usuario.find();
+
             return res.json({
                 ok: true,
                 usuarios
@@ -107,7 +109,6 @@ const getUsuariosFiltroRol = async(req, res) => {
         });
     }
 };
-
 const getUsuariosRol = async(req, res) => {
 
     const rol = req.body.rol;
@@ -307,5 +308,5 @@ module.exports = {
     borrarUsuario,
     getUsuariosAdministrativos,
     getUsuario,
-    getUsuariosFiltroRol,
+    getUsuariosFiltroRol
 };

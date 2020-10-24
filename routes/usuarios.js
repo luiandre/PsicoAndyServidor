@@ -14,6 +14,7 @@ const {
     actualizarUsuario,
     borrarUsuario,
     getUsuariosFiltroRol,
+    getUsuariosFiltroRolLista
 } = require('../controllers/usuarios');
 const { validarJWT, validarAdminRol, validarAdminRoloUid } = require('../middlewares/validar-jwt');
 
