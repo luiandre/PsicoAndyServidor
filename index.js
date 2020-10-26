@@ -2,9 +2,9 @@
 
 require('dotenv').config();
 const path = require('path');
-
 const express = require('express');
 const cors = require('cors');
+// const { PeerServer } = require('peer');
 
 const { dbConnection } = require('./database/config');
 
@@ -13,6 +13,8 @@ const app = express();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
+
+// const peerServer = PeerServer({ port: 9000, path: '/myapp' });
 
 app.use(cors());
 
@@ -44,13 +46,20 @@ io.on('connection', (socket) => {
         io.emit('nuevo-eliminada', data);
     });
 
-    socket.on('stream', (data) => {
-        io.emit('nuevo-stream', data);
-    });
+    // Salas
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.to(roomId).broadcast.emit('user-connected', userId);
 
+        socket.on('disconnect', () => {
+            socket.to(roomId).broadcast.emit('user-disconnected', userId);
+        });
+    });
 });
 
 //Directorio publico
+
+app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 

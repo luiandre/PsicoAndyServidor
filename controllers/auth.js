@@ -157,6 +157,7 @@ const activarEstado = async(req, res) => {
             });
         }
 
+
         const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: true }, { new: true });
 
         res.json({
@@ -184,7 +185,7 @@ const desactivarEstado = async(req, res) => {
             });
         }
 
-        if (usuarioDB.conexiones == 0) {
+        if (usuarioDB.conexiones <= 0) {
             const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
 
             res.json({
@@ -246,7 +247,17 @@ const restarConexion = async(req, res) => {
             });
         }
 
-        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { conexiones: usuarioDB.conexiones - 1 }, { new: true });
+        if (usuarioDB.conexiones > 0) {
+            conexiones = usuarioDB.conexiones - 1;
+        } else if (usuarioDB.conexiones <= 0) {
+            conexiones = 0;
+        }
+
+        const usuarioActualizado = await Usuario.findByIdAndUpdate(id, { conexiones }, { new: true });
+
+        if (conexiones == 0) {
+            await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+        }
 
         res.json({
             ok: true,
