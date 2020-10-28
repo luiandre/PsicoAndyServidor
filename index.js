@@ -37,6 +37,9 @@ io.on('connection', (socket) => {
         io.emit('nuevo-usuarios', usuarios);
     });
 
+    socket.on('eliminar-usuarios', (usuarios) => {
+        io.emit('nuevo-eliminado', usuarios);
+    });
     // Videollamada
     socket.on('guardar-llamada', (data) => {
         io.emit('nuevo-llamada', data);
@@ -44,6 +47,10 @@ io.on('connection', (socket) => {
 
     socket.on('sala-eliminada', (data) => {
         io.emit('nuevo-eliminada', data);
+    });
+
+    socket.on('llamada-rechazada', (data) => {
+        io.emit('nuevo-rechazada', data);
     });
 
     // Salas

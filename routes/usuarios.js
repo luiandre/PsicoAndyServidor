@@ -14,7 +14,8 @@ const {
     actualizarUsuario,
     borrarUsuario,
     getUsuariosFiltroRol,
-    getUsuariosFiltroRolLista
+    habilitarUsuario,
+    terminosUsuario
 } = require('../controllers/usuarios');
 const { validarJWT, validarAdminRol, validarAdminRoloUid } = require('../middlewares/validar-jwt');
 
@@ -50,7 +51,9 @@ router.put('/:id', [
     ],
     actualizarUsuario);
 
-
-router.delete('/:id', validarJWT, validarAdminRol, borrarUsuario);
+// router.delete('/:id', validarJWT, validarAdminRol, borrarUsuario);
+router.put('/borrar/:id', validarJWT, validarAdminRol, borrarUsuario);
+router.put('/habilitar/:id', validarJWT, validarAdminRol, habilitarUsuario);
+router.put('/terminos/:id', validarJWT, terminosUsuario);
 
 module.exports = router;

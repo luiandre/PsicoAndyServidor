@@ -45,6 +45,10 @@ const UsuarioSchema = Schema({
         type: Boolean,
         default: true
     },
+    terminos: {
+        type: Boolean,
+        default: false
+    },
     conexiones: {
         type: Number,
         default: 0

@@ -4,7 +4,6 @@ const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
-const Mensaje = require('../models/mensaje');
 const { generarJWT } = require("../helpers/jwt");
 const { getMenuFrontEnd } = require("../helpers/menu-frontend");
 
@@ -147,6 +146,8 @@ const crearUsuario = async(req, res = response) => {
 
         const usuario = new Usuario(req.body);
 
+        usuario.terminos = true;
+
         // Encriptar contraseña
 
         const salt = bcryptjs.genSaltSync();
@@ -286,13 +287,88 @@ const borrarUsuario = async(req, res = response) => {
 
         //Actualizar
 
-        const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, { activo: false });
+        await Usuario.findByIdAndUpdate(uid, { activo: false }, { new: true });
 
         res.json({
             ok: true,
             msg: 'Usuario eliminado'
         });
     } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const habilitarUsuario = async(req, res = response) => {
+    const uid = req.params.id;
+    const uidUser = req.uid;
+
+    try {
+
+        if (uid === uidUser) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No se puede habilitar a si mismo'
+            });
+        }
+
+        const usuarioDB = await Usuario.findById(uid);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        // await Usuario.findByIdAndRemove(uid);
+
+        //Actualizar
+
+        await Usuario.findByIdAndUpdate(uid, { activo: true }, { new: true });
+
+        res.json({
+            ok: true,
+            msg: 'Usuario habilitado'
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const terminosUsuario = async(req, res = response) => {
+    const uid = req.params.id;
+
+    try {
+
+        const usuarioDB = await Usuario.findById(uid);
+
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe un usuario con el id'
+            });
+        }
+
+        // await Usuario.findByIdAndRemove(uid);
+
+        //Actualizar
+
+        await Usuario.findByIdAndUpdate(uid, { terminos: true }, { new: true });
+
+        res.json({
+            ok: true,
+            msg: 'Terminos aceptados'
+        });
+    } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
@@ -308,5 +384,7 @@ module.exports = {
     borrarUsuario,
     getUsuariosAdministrativos,
     getUsuario,
-    getUsuariosFiltroRol
+    getUsuariosFiltroRol,
+    habilitarUsuario,
+    terminosUsuario
 };

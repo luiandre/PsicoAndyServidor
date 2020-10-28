@@ -38,7 +38,7 @@ const validarAdminRol = async(req, res = response, next = any) => {
 
     try {
 
-        const usuarioDB = await Usuario.findById(uis);
+        const usuarioDB = await Usuario.findById(uid);
 
         if (!usuarioDB) {
             return res.status(404).json({
@@ -56,6 +56,7 @@ const validarAdminRol = async(req, res = response, next = any) => {
 
         next();
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             ok: false,
             msg: 'Ha ocurrido un error'
@@ -89,6 +90,7 @@ const validarAdminRoloUid = async(req, res = response, next = any) => {
         }
 
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             ok: false,
             msg: 'Ha ocurrido un error'
