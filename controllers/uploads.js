@@ -61,7 +61,8 @@ const cargarArchivo = (req, res = response) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
-                    msg: 'Error al guardar la imagen en el servidor'
+                    msg: 'Error al guardar la imagen en el servidor',
+                    error: err
                 });
             }
 
