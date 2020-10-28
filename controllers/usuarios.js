@@ -38,7 +38,8 @@ const getUsuarios = async(req, res) => {
         const [usuarios, total] = await Promise.all([
             Usuario.find({}, 'nombre apellido email rol google activo img bio estado pendiente')
             .skip(desde)
-            .limit(hasta),
+            .limit(hasta)
+            .sort({ nombre: 1 }),
 
             Usuario.countDocuments()
         ]);
@@ -61,7 +62,8 @@ const getUsuarios = async(req, res) => {
 const getUsuariosAdministrativos = async(req, res) => {
 
     try {
-        const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
+        const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] })
+            .sort({ nombre: 1 });
 
         res.json({
             ok: true,
@@ -81,13 +83,15 @@ const getUsuariosFiltroRol = async(req, res) => {
 
     try {
         if (rolUsuario == 'USER_ROL') {
-            const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] });
+            const usuarios = await Usuario.find({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] })
+                .sort({ nombre: 1 });
             return res.json({
                 ok: true,
                 usuarios
             });
         } else if (rolUsuario == 'ADMIN_ROL' || rolUsuario == 'PROF_ROL') {
-            const usuarios = await Usuario.find();
+            const usuarios = await Usuario.find()
+                .sort({ nombre: 1 });
 
             return res.json({
                 ok: true,
@@ -114,7 +118,8 @@ const getUsuariosRol = async(req, res) => {
 
     try {
 
-        const usuarios = await Usuario.find({ rol }, 'nombre apellido email rol google activo img bio estado pendiente');
+        const usuarios = await Usuario.find({ rol }, 'nombre apellido email rol google activo img bio estado pendiente')
+            .sort({ nombre: 1 });
 
         res.json({
             ok: true,

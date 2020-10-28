@@ -15,7 +15,8 @@ const getServicios = async(req, res = response) => {
             .populate('usuario', 'nombre apellido img')
             .populate('responsable', 'nombre apellido img')
             .skip(desde)
-            .limit(hasta),
+            .limit(hasta)
+            .sort({ fecha: -1 }),
 
             Servicio.countDocuments()
         ]);

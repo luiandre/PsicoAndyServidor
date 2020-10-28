@@ -14,7 +14,8 @@ const getNoticias = async(req, res = response) => {
             Noticia.find()
             .populate('usuario', 'nombre apellido')
             .skip(desde)
-            .limit(hasta),
+            .limit(hasta)
+            .sort({ fecha: -1 }),
 
             Noticia.countDocuments()
         ]);

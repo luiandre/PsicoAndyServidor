@@ -18,9 +18,9 @@ const getTodo = async(req, res = response) => {
                     { nombre: regex },
                     { apellido: regex }
                 ]
-            }),
-            Noticia.find({ titulo: regex }),
-            Servicio.find({ titulo: regex })
+            }).sort({ nombre: 1 }),
+            Noticia.find({ titulo: regex }).sort({ fecha: -1 }),
+            Servicio.find({ titulo: regex }).sort({ fecha: -1 }),
         ]);
 
 
@@ -50,10 +50,10 @@ const getDocumentos = async(req, res = response) => {
 
     switch (tabla) {
         case 'noticias':
-            data = await Noticia.find({ titulo: regex });
+            data = await Noticia.find({ titulo: regex }).sort({ fecha: -1 });
             break;
         case 'servicios':
-            data = await Servicio.find({ titulo: regex });
+            data = await Servicio.find({ titulo: regex }).sort({ fecha: -1 });
             break;
         case 'usuarios':
             data = await Usuario.find({
@@ -61,7 +61,7 @@ const getDocumentos = async(req, res = response) => {
                     { nombre: regex },
                     { apellido: regex }
                 ]
-            });
+            }).sort({ nombre: 1 });
             break;
         default:
             return res.status(400).json({
@@ -92,7 +92,7 @@ const getUsuariosBusquedaRol = async(req, res) => {
 
     try {
         if (rolUsuario == 'USER_ROL') {
-            const usuarios = await Usuario.find(filtro);
+            const usuarios = await Usuario.find(filtro).sort({ nombre: 1 });
             return res.json({
                 ok: true,
                 usuarios
@@ -103,7 +103,7 @@ const getUsuariosBusquedaRol = async(req, res) => {
                     { nombre: regex },
                     { apellido: regex }
                 ]
-            });
+            }).sort({ nombre: 1 });
             return res.json({
                 ok: true,
                 usuarios
