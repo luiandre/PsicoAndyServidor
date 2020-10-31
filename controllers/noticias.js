@@ -32,7 +32,6 @@ const getNoticias = async(req, res = response) => {
         });
     }
 
-
 };
 
 const getNoticia = async(req, res = response) => {
