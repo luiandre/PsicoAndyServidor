@@ -4,7 +4,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-// const { PeerServer } = require('peer');
+const { PeerServer } = require('peer');
 
 const { dbConnection } = require('./database/config');
 
@@ -14,7 +14,7 @@ const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
 
-// const peerServer = PeerServer({ port: 9000, path: '/myapp' });
+const peerServer = PeerServer({ port: 3001 });
 
 app.use(cors());
 
@@ -79,7 +79,6 @@ app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/api/upload', require('./routes/uploads'));
 
-// Lo último
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
 });
