@@ -4,6 +4,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 const { PeerServer } = require('peer');
 
 const { dbConnection } = require('./database/config');
@@ -14,7 +15,13 @@ const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
 
-const peerServer = PeerServer({ port: 3001 });
+const peerServer = PeerServer({
+	port: 3001,
+	ssl: {
+		key: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/privkey.pem'),
+		cert: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/fullchain.pem')
+	}
+});
 
 app.use(cors());
 
