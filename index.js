@@ -17,10 +17,10 @@ const io = require('socket.io')(server);
 
 const peerServer = PeerServer({
     port: 3001,
-    ssl: {
-        key: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/privkey.pem'),
-        cert: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/fullchain.pem')
-    }
+    // ssl: {
+    //     key: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/privkey.pem'),
+    //     cert: fs.readFileSync('/etc/letsencrypt/live/psicoandymd.xyz/fullchain.pem')
+    // }
 });
 
 app.use(cors());
