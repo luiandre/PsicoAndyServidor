@@ -124,17 +124,24 @@ const renewToken = async(req, res = response) => {
     const uid = req.uid;
 
     try {
-        //Generar token
-        const token = await generarJWT(uid);
+        if (uid) {
+            //Generar token
+            const token = await generarJWT(uid);
 
-        const usuarioDB = await Usuario.findById(uid);
+            const usuarioDB = await Usuario.findById(uid);
 
-        res.json({
-            ok: true,
-            token,
-            usuario: usuarioDB,
-            menu: getMenuFrontEnd(usuarioDB.rol)
-        });
+            return res.json({
+                ok: true,
+                token,
+                usuario: usuarioDB,
+                menu: getMenuFrontEnd(usuarioDB.rol)
+            });
+        } else {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario no autenticado'
+            });
+        }
     } catch (error) {
         res.status(500).json({
             ok: false,
