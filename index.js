@@ -16,7 +16,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const peerServer = PeerServer({
-    port: 443,
+    port: 3001,
     ssl: {
         key: fs.readFileSync('./ssl/privkey.pem'),
         cert: fs.readFileSync('./ssl/fullchain.pem')
