@@ -33,6 +33,11 @@ dbConnection();
 //Socket
 
 io.on('connection', (socket) => {
+
+    socket.on('guardar-noticia', (nuevoMensaje) => {
+        io.emit('nuevo-noticia', nuevoMensaje);
+    });
+
     socket.on('guardar-mensaje', (nuevoMensaje) => {
         io.emit('nuevo-mensaje', nuevoMensaje);
     });
