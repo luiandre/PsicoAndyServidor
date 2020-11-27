@@ -13,7 +13,7 @@ const router = Router();
 
 router.get('/', validarJWT, getComunicados);
 
-router.get('/:id', validarJWT, getComunicados);
+router.get('/:id', validarJWT, getComunicado);
 
 router.post('/', [
         validarJWT,
