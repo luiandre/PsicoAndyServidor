@@ -292,7 +292,7 @@ const borrarUsuario = async(req, res = response) => {
 
         //Actualizar
 
-        await Usuario.findByIdAndUpdate(uid, { activo: false }, { new: true });
+        await Usuario.findByIdAndUpdate(uid, { activo: false, conexiones: 0, estado: false }, { new: true });
 
         res.json({
             ok: true,
