@@ -38,6 +38,10 @@ io.on('connection', (socket) => {
         io.emit('nuevo-noticia', nuevoMensaje);
     });
 
+    socket.on('guardar-comunicado', (nuevoMensaje) => {
+        io.emit('nuevo-comunicado', nuevoMensaje);
+    });
+
     socket.on('guardar-mensaje', (nuevoMensaje) => {
         io.emit('nuevo-mensaje', nuevoMensaje);
     });
@@ -85,6 +89,7 @@ app.use(express.static('public'));
 
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/noticias', require('./routes/noticias'));
+app.use('/api/comunicados', require('./routes/comunicado'));
 app.use('/api/servicios', require('./routes/servicios'));
 app.use('/api/salas', require('./routes/salas'));
 app.use('/api/mensajes', require('./routes/mensajes'));

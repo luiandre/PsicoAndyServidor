@@ -21,6 +21,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
                 submenu: [
                     { titulo: 'Principal', url: '/dashboard' },
                     { titulo: 'Usuarios', url: '/dashboard/usuarios' },
+                    { titulo: 'Comunicados', url: '/dashboard/comunicados' },
                     { titulo: 'Noticias', url: '/dashboard/noticias' },
                     { titulo: 'Servicios', url: '/dashboard/servicios' }
                 ]

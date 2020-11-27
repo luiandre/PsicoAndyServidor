@@ -5,6 +5,7 @@ const { response } = require("express");
 const Usuario = require('../models/usuario');
 const Noticia = require('../models/noticia');
 const Servicio = require('../models/servicio');
+const Comunicado = require("../models/comunicado");
 
 const getTodo = async(req, res = response) => {
 
@@ -49,6 +50,9 @@ const getDocumentos = async(req, res = response) => {
     let data = [];
 
     switch (tabla) {
+        case 'comunicados':
+            data = await Comunicado.find({ titulo: regex }).sort({ fecha: -1 });
+            break;
         case 'noticias':
             data = await Noticia.find({ titulo: regex }).sort({ fecha: -1 });
             break;
