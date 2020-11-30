@@ -321,20 +321,21 @@ const recuperarPassword = async(req, res) => {
             to: email,
             subject: 'Restablecimiento de Contraseña',
             text: `Se ha solicitado un restablecimeinto de contraseña a este correo.`,
-            html: `<br>
-            <img src="https://www.facebook.com/psicoandymotivacionydesarrollo/photos/a.494842604038717/1228155190707451/">
+            html: `<div style="background-color: #007bff; text-align: center; padding: 10px;">
+            <img style="height: 400px; width: max-content;" src="https://scontent.fuio4-1.fna.fbcdn.net/v/t1.0-9/88173981_1228155194040784_2707917270276898816_n.png?_nc_cat=109&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeEm3pE-Y93BBgNy_oufKn41moCb0Ob2LmmagJvQ5vYuaUaO0ZU-n_dIpNuywYktWh1fwnNDr9V2VzezQEUQNniS&_nc_ohc=98mbvofmQQsAX8WTlJ5&_nc_ht=scontent.fuio4-1.fna&oh=5ffb8d5b86f028452cf239932d4016d7&oe=5FE92818">
+        </div>
+        <br>
+        <div style="padding-left: 200px;">
+            <div style="text-align: justify;">
+                <strong>Nueva Contraseña</strong>
+            </div>
             <br>
+            <br> Su nueva contraseña es ${password}.
             <br>
-            <strong>Nueva Contraseña</strong>
+            <br> Por su seguridad, cambie su contraseña
             <br>
-            <br>
-            Su nueva contraseña es ${password}.
-            <br>
-            <br>
-            Por su seguridad, cambie su contraseña
-            <br>
-            <br>
-            Si usted no solició este servicio, contacte con soporte técnico mediante este corre electronico.
+            <br> Si usted no solició este servicio, contacte con soporte técnico mediante este corre electronico.
+        </div>
             `
         };
 
