@@ -334,14 +334,13 @@ const recuperarPassword = async(req, res) => {
             <br>
             <br> Por su seguridad, cambie su contraseña
             <br>
-            <br> Si usted no solició este servicio, contacte con soporte técnico mediante este corre electronico.
+            <br> Si ústed no solició este servicio, contacte con soporte técnico mediante este correo electrónico.
         </div>
             `
         };
 
         transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
-                console.log(error);
                 res.status(500).json({
                     ok: false,
                     msg: 'Un error ha ocurrido'
@@ -355,7 +354,6 @@ const recuperarPassword = async(req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
