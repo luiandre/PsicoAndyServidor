@@ -15,7 +15,8 @@ const {
     borrarUsuario,
     getUsuariosFiltroRol,
     habilitarUsuario,
-    terminosUsuario
+    terminosUsuario,
+    getUsuariosAsignaciones
 } = require('../controllers/usuarios');
 const { validarJWT, validarAdminRol, validarAdminRoloUid } = require('../middlewares/validar-jwt');
 
@@ -30,6 +31,8 @@ router.get('/rol', getUsuariosRol);
 router.get('/rol/usuario/:rol', getUsuariosFiltroRol);
 
 router.get('/rol/administrativos', getUsuariosAdministrativos);
+
+router.get('/rol/usuariosasignaciones', getUsuariosAsignaciones);
 
 router.post('/', [
         check('nombre', 'El nombre es obligatorio').not().isEmpty(),

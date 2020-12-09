@@ -7,7 +7,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
     if (rol === 'ADMIN_ROL') {
         menu = [{
                 titulo: 'PsicoAndy',
-                icono: 'mdi mdi-arrow-down-drop-circle',
+                icono: 'mdi mdi-city',
                 submenu: [
                     { titulo: 'Inicio', url: '/' },
                     { titulo: 'Servicios', url: '/servicios' },
@@ -24,6 +24,16 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
                     { titulo: 'Comunicados', url: '/dashboard/comunicados' },
                     { titulo: 'Noticias', url: '/dashboard/noticias' },
                     { titulo: 'Servicios', url: '/dashboard/servicios' }
+                ]
+            },
+            {
+                titulo: 'Pacientes',
+                icono: 'mdi mdi-ambulance',
+                submenu: [
+                    { titulo: 'Asignación', url: '/dashboard/asignaciones' },
+                    { titulo: 'Historia Clínica', url: '/dashboard/historias' },
+                    { titulo: 'Seguimiento', url: '/dashboard/seguimientos' },
+                    { titulo: 'Citas', url: '/dashboard/citas' }
                 ]
             }
         ];
@@ -45,6 +55,15 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
                     { titulo: 'Principal', url: '/dashboard' },
                     { titulo: 'Noticias', url: '/dashboard/noticias' },
                     { titulo: 'Servicios', url: '/dashboard/servicios' }
+                ]
+            },
+            {
+                titulo: 'Pacientes',
+                icono: 'mdi mdi-ambulance',
+                submenu: [
+                    { titulo: 'Historia Clínica', url: '/dashboard/historias' },
+                    { titulo: 'Seguimiento', url: '/dashboard/seguimientos' },
+                    { titulo: 'Citas', url: '/dashboard/citas' }
                 ]
             }
         ];

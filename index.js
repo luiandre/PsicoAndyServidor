@@ -89,6 +89,7 @@ app.use(express.static('public'));
 
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/noticias', require('./routes/noticias'));
+app.use('/api/asignaciones', require('./routes/asignaciones'));
 app.use('/api/comunicados', require('./routes/comunicado'));
 app.use('/api/servicios', require('./routes/servicios'));
 app.use('/api/salas', require('./routes/salas'));

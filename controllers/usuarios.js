@@ -59,6 +59,36 @@ const getUsuarios = async(req, res) => {
 
 };
 
+const getUsuariosAsignaciones = async(req, res) => {
+    try {
+        const desde = Number(req.query.desde) || 0;
+        const hasta = Number(req.query.hasta) || 0;
+
+        const [usuarios, total] = await Promise.all([
+            Usuario.find({ rol: 'USER_ROL' }, 'nombre apellido email rol google activo img bio estado pendiente')
+            .skip(desde)
+            .limit(hasta)
+            .sort({ nombre: 1 }),
+
+            Usuario.countDocuments()
+        ]);
+
+        res.json({
+            ok: true,
+            usuarios,
+            total
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
+};
+
 const getUsuariosAdministrativos = async(req, res) => {
 
     try {
@@ -391,5 +421,6 @@ module.exports = {
     getUsuario,
     getUsuariosFiltroRol,
     habilitarUsuario,
-    terminosUsuario
+    terminosUsuario,
+    getUsuariosAsignaciones
 };
