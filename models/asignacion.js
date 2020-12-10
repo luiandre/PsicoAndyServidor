@@ -13,6 +13,11 @@ const AsignacionSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
     },
+    usuario: {
+        require: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+    },
     fecha: {
         type: Number,
         required: true,

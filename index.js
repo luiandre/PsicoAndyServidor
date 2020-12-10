@@ -38,6 +38,10 @@ io.on('connection', (socket) => {
         io.emit('nuevo-noticia', nuevoMensaje);
     });
 
+    socket.on('guardar-asignacion', (asignacion) => {
+        io.emit('nuevo-asignacion', asignacion);
+    });
+
     socket.on('guardar-comunicado', (nuevoMensaje) => {
         io.emit('nuevo-comunicado', nuevoMensaje);
     });
