@@ -101,6 +101,7 @@ app.use('/api/mensajes', require('./routes/mensajes'));
 app.use('/api/todo', require('./routes/busquedas'));
 app.use('/api/login', require('./routes/auth'));
 app.use('/api/upload', require('./routes/uploads'));
+app.use('/api/historias', require('./routes/historias'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
