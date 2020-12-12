@@ -27,12 +27,11 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
                 ]
             },
             {
-                titulo: 'Pacientes',
+                titulo: 'Salud',
                 icono: 'mdi mdi-ambulance',
                 submenu: [
                     { titulo: 'Asignación', url: '/dashboard/asignaciones' },
-                    { titulo: 'Historia Clínica', url: '/dashboard/historias' },
-                    { titulo: 'Seguimiento', url: '/dashboard/seguimientos' },
+                    { titulo: 'Pacientes', url: '/dashboard/historias' },
                     { titulo: 'Citas', url: '/dashboard/citas' }
                 ]
             }
@@ -40,7 +39,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
     } else if (rol === 'PROF_ROL') {
         menu = [{
                 titulo: 'PsicoAndy',
-                icono: 'mdi mdi-arrow-down-drop-circle',
+                icono: 'mdi mdi-city',
                 submenu: [
                     { titulo: 'Inicio', url: '/' },
                     { titulo: 'Servicios', url: '/servicios' },
@@ -58,26 +57,33 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
                 ]
             },
             {
-                titulo: 'Pacientes',
+                titulo: 'Salud',
                 icono: 'mdi mdi-ambulance',
                 submenu: [
-                    { titulo: 'Historia Clínica', url: '/dashboard/historias' },
-                    { titulo: 'Seguimiento', url: '/dashboard/seguimientos' },
+                    { titulo: 'Pacientes', url: '/dashboard/historias' },
                     { titulo: 'Citas', url: '/dashboard/citas' }
                 ]
             }
         ];
     } else {
         menu = [{
-            titulo: 'PsicoAndy',
-            icono: 'mdi mdi-arrow-down-drop-circle',
-            submenu: [
-                { titulo: 'Inicio', url: '/' },
-                { titulo: 'Servicios', url: '/servicios' },
-                { titulo: 'Conócenos', url: '/conocenos' },
-                { titulo: 'Contáctanos', url: '/contactanos' },
-            ]
-        }];
+                titulo: 'PsicoAndy',
+                icono: 'mdi mdi-city',
+                submenu: [
+                    { titulo: 'Inicio', url: '/' },
+                    { titulo: 'Servicios', url: '/servicios' },
+                    { titulo: 'Conócenos', url: '/conocenos' },
+                    { titulo: 'Contáctanos', url: '/contactanos' },
+                ]
+            },
+            {
+                titulo: 'Tests Autoaplicables',
+                icono: 'mdi mdi-note',
+                submenu: [
+                    { titulo: 'Escala de autoestima', url: '/escalaAutoestima' },
+                ]
+            }
+        ];
     }
 
     return menu;

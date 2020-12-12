@@ -18,7 +18,7 @@ const getAsignaciones = async(req, res = response) => {
             .limit(hasta)
             .sort({ fecha: -1 }),
 
-            Asignacion.countDocuments()
+            Asignacion.countDocuments({ paciente: uid })
         ]);
 
         res.json({
@@ -49,7 +49,7 @@ const getAsignacionesProfesional = async(req, res = response) => {
             .limit(hasta)
             .sort({ fecha: -1 }),
 
-            Asignacion.countDocuments()
+            Asignacion.countDocuments({ profesional: uid })
         ]);
 
         res.json({

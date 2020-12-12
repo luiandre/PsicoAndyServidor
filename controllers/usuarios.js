@@ -70,7 +70,7 @@ const getUsuariosAsignaciones = async(req, res) => {
             .limit(hasta)
             .sort({ nombre: 1 }),
 
-            Usuario.countDocuments()
+            Usuario.countDocuments({ rol: 'USER_ROL' })
         ]);
 
         res.json({
@@ -102,7 +102,7 @@ const getUsuariosAdministrativosPaginado = async(req, res) => {
             .skip(desde)
             .limit(hasta),
 
-            Usuario.estimatedDocumentCount()
+            Usuario.countDocuments({ $or: [{ rol: 'ADMIN_ROL' }, { rol: 'PROF_ROL' }] })
         ]);
 
         res.json({
