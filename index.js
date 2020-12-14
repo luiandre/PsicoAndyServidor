@@ -104,6 +104,7 @@ app.use('/api/upload', require('./routes/uploads'));
 app.use('/api/historias', require('./routes/historias'));
 app.use('/api/seguimientos', require('./routes/seguimientos'));
 app.use('/api/testautoestima', require('./routes/testAutoestima'));
+app.use('/api/citas', require('./routes/citas'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public/index.html'));
