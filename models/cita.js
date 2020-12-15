@@ -7,10 +7,6 @@ const CitaSchema = Schema({
         type: String,
         required: true
     },
-    detalle: {
-        type: String,
-        required: true
-    },
     fecha: {
         type: String,
         required: true

@@ -9,9 +9,9 @@ const { validarJWT, validarAdminProfRol, validarAdminRol } = require('../middlew
 
 const router = Router();
 
-router.get('/:uid', validarJWT, validarAdminRol, getAsignaciones);
+router.get('/:uid', validarJWT, validarAdminProfRol, getAsignaciones);
 
-router.get('/getAsignacionesProfesional/:uid', validarJWT, validarAdminRol, getAsignacionesProfesional);
+router.get('/getAsignacionesProfesional/:uid', validarJWT, validarAdminProfRol, getAsignacionesProfesional);
 
 router.post('/', [
         validarJWT,

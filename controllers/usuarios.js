@@ -30,6 +30,35 @@ const getUsuario = async(req, res = response) => {
 
 };
 
+const getUsuarioEmail = async(req, res = response) => {
+
+    const email = req.params.email;
+
+
+    try {
+
+        const usuarioDB = await Usuario.findOne({ email, rol: 'USER_ROL' }, 'uid nombre apellido email rol google activo img bio estado pendiente');
+
+        if (!usuarioDB) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No existe usuario con ese email'
+            });
+        }
+        res.json({
+            ok: true,
+            usuario: usuarioDB
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+};
+
 const getUsuarios = async(req, res) => {
     try {
         const desde = Number(req.query.desde) || 0;
@@ -452,5 +481,6 @@ module.exports = {
     habilitarUsuario,
     terminosUsuario,
     getUsuariosAsignaciones,
-    getUsuariosAdministrativosPaginado
+    getUsuariosAdministrativosPaginado,
+    getUsuarioEmail
 };

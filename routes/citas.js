@@ -19,7 +19,6 @@ router.post('/', [
         validarJWT,
         validarAdminProfRol,
         check('titulo', 'El titulo de la noticia es necesario').not().isEmpty(),
-        check('detalle', 'El detalle de la noticia es necesario').not().isEmpty(),
         check('fecha', 'La fecha es necesaria').not().isEmpty(),
         validarCampos
     ],

@@ -17,7 +17,8 @@ const {
     habilitarUsuario,
     terminosUsuario,
     getUsuariosAsignaciones,
-    getUsuariosAdministrativosPaginado
+    getUsuariosAdministrativosPaginado,
+    getUsuarioEmail
 } = require('../controllers/usuarios');
 const { validarJWT, validarAdminRol, validarAdminRoloUid } = require('../middlewares/validar-jwt');
 
@@ -26,6 +27,8 @@ const router = Router();
 router.get('/:id', getUsuario);
 
 router.get('/', getUsuarios);
+
+router.get('/getUsuarioEmail/:email', getUsuarioEmail);
 
 router.get('/rol', getUsuariosRol);
 
