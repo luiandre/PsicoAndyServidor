@@ -88,6 +88,76 @@ const crearSala = async(req, res = response) => {
     }
 };
 
+const agregarSalaCon = async(req, res = response) => {
+    const uuid = req.params.uuid;
+    const uid = req.uid;
+
+    try {
+
+        const salaDB = await Sala.findOne({ uuid });
+
+        if (!salaDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Sala no encontrado'
+            });
+        }
+
+        let salaActualizada;
+        if (uid == salaDB.origen) {
+            salaActualizada = await Sala.findOneAndUpdate(uuid, { conOrigen: true }, { new: true });
+        } else if (uid == salaDB.destino) {
+            salaActualizada = await Sala.findOneAndUpdate(uuid, { conDestino: true }, { new: true });
+        }
+
+        res.json({
+            ok: true,
+            sala: salaActualizada
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
+const eliminarSalaCon = async(req, res = response) => {
+    const uuid = req.params.uuid;
+    const uid = req.uid;
+
+    try {
+
+        const salaDB = await Sala.findOne({ uuid });
+
+        if (!salaDB) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Sala no encontrado'
+            });
+        }
+
+        let salaActualizada;
+        if (uid == salaDB.origen) {
+            salaActualizada = await Sala.findOneAndUpdate(uuid, { conOrigen: false }, { new: true });
+        } else if (uid == salaDB.destino) {
+            salaActualizada = await Sala.findOneAndUpdate(uuid, { conDestino: false }, { new: true });
+        }
+
+        res.json({
+            ok: true,
+            sala: salaActualizada
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+};
+
 
 
 const borrarSala = async(req, res = response) => {
@@ -123,5 +193,7 @@ module.exports = {
     getSala,
     crearSala,
     borrarSala,
-    getSalas
+    getSalas,
+    agregarSalaCon,
+    eliminarSalaCon
 };

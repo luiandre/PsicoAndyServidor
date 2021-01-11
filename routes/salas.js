@@ -3,10 +3,8 @@
 // Ruta: /api/salas
 
 const { Router } = require('express');
-const { check } = require('express-validator');
-const { validarCampos } = require('../middlewares/valida-campos');
 
-const { getSala, crearSala, borrarSala, getSalas } = require('../controllers/salas');
+const { getSala, crearSala, borrarSala, getSalas, agregarSalaCon, eliminarSalaCon } = require('../controllers/salas');
 const { validarJWT, validarAdminProfRol } = require('../middlewares/validar-jwt');
 
 const router = Router();
@@ -20,6 +18,16 @@ router.post('/:uid', [
         validarJWT,
     ],
     crearSala);
+
+router.put('/agregarSalaCon/:uuid', [
+        validarJWT,
+    ],
+    agregarSalaCon);
+
+router.put('/eliminarSalaCon/:uuid', [
+        validarJWT,
+    ],
+    eliminarSalaCon);
 
 router.delete('/:uuid', validarJWT, validarAdminProfRol, borrarSala);
 

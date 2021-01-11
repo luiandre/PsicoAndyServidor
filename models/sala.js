@@ -15,6 +15,14 @@ const SalaSchema = Schema({
     uuid: {
         type: String,
     },
+    conOrigen: {
+        type: Boolean,
+        default: false
+    },
+    conDestino: {
+        type: Boolean,
+        default: false
+    }
 
 });
 
