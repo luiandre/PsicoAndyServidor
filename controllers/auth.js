@@ -21,7 +21,7 @@ const login = async(req, res = response) => {
         if (!usuarioDB) {
             return res.status(404).json({
                 ok: false,
-                msg: 'Email no valido'
+                msg: 'Email no válido'
             });
         }
 
@@ -38,7 +38,7 @@ const login = async(req, res = response) => {
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Contraseña no valido'
+                msg: 'Contraseña no válida'
             });
         }
 

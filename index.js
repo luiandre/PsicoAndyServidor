@@ -34,6 +34,10 @@ dbConnection();
 
 io.on('connection', (socket) => {
 
+    socket.on('guardar-dispositivo', (usuario) => {
+        io.emit('nuevo-dispositivo', usuario);
+    });
+
     socket.on('guardar-noticia', (nuevoMensaje) => {
         io.emit('nuevo-noticia', nuevoMensaje);
     });
