@@ -321,21 +321,25 @@ const recuperarPassword = async(req, res) => {
             to: email,
             subject: 'Restablecimiento de Contraseña',
             text: `Se ha solicitado un restablecimeinto de contraseña a este correo.`,
-            html: `<div style="background-color: #007bff; text-align: center; padding: 10px;">
-            <img style="height: 400px; width: max-content;" src="https://scontent.fuio4-1.fna.fbcdn.net/v/t1.0-9/88173981_1228155194040784_2707917270276898816_n.png?_nc_cat=109&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeEm3pE-Y93BBgNy_oufKn41moCb0Ob2LmmagJvQ5vYuaUaO0ZU-n_dIpNuywYktWh1fwnNDr9V2VzezQEUQNniS&_nc_ohc=98mbvofmQQsAX8WTlJ5&_nc_ht=scontent.fuio4-1.fna&oh=5ffb8d5b86f028452cf239932d4016d7&oe=5FE92818">
+            html: `<div style="background-color: transparent; text-align: center; padding: 40px;">
+            <img style="height: 400px; width: max-content;"  src="https://psicoandymd.com/api/upload/87166933_1228240407365596_1444370542135083008_o.jpg">
             </div>
             <br>
             <div style="padding-left: 200px;">
-            <div style="text-align: justify;">
-                <strong>Nueva Contraseña</strong>
+                <div style="text-align: justify;">
+                    <strong>Nueva Contraseña</strong>
+                </div>
+                <p>Ha realizado una solicitud de nueva contraseña.</p>
+                <br>Su nueva contraseña es ${password}
+                <br>
+                <br>Por su seguridad, cambie su contraseña
+                <br>
+                <p>Si ústed no solició este servicio, contacte con soporte técnico mediante este correo electrónico.</p>
+                <br>
+                <div style="text-align: center;">
+                    <small>© 2021 PsicoAndy M&D</small>
+                </div>
             </div>
-            <br>
-            <br> Su nueva contraseña es ${password}.
-            <br>
-            <br> Por su seguridad, cambie su contraseña
-            <br>
-            <br> Si ústed no solició este servicio, contacte con soporte técnico mediante este correo electrónico.
-        </div>
             `
         };
 

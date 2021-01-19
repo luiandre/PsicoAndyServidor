@@ -107,7 +107,20 @@ const obtenerImagen = (req, res) => {
 
 };
 
+const obtenerImagenServidor = (req, res) => {
+    const tipo = req.params.tipo;
+    const img = req.params.img;
+
+    const pathImg = path.join(__dirname, `../uploads/${ img }`);
+
+    //Imagen por defecto
+    if (fs.existsSync(pathImg)) {
+        res.sendFile(pathImg);
+    }
+};
+
 module.exports = {
     cargarArchivo,
-    obtenerImagen
+    obtenerImagen,
+    obtenerImagenServidor
 };
