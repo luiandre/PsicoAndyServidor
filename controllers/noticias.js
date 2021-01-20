@@ -34,6 +34,26 @@ const getNoticias = async(req, res = response) => {
 
 };
 
+const getNoticiasAll = async(req, res = response) => {
+
+    try {
+        const noticias = await Noticia.find()
+            .populate('usuario', 'nombre apellido')
+            .sort({ fecha: -1 });
+
+        res.json({
+            ok: true,
+            noticias,
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+};
+
 const getNoticia = async(req, res = response) => {
 
     const id = req.params.id;
@@ -152,5 +172,6 @@ module.exports = {
     crearNoticia,
     actualizarNoticia,
     borrarNoticia,
-    getNoticia
+    getNoticia,
+    getNoticiasAll
 };

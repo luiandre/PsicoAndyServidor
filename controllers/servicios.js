@@ -36,6 +36,29 @@ const getServicios = async(req, res = response) => {
 
 };
 
+const getServiciosAll = async(req, res = response) => {
+
+    try {
+
+        const servicios = await Servicio.find()
+            .populate('usuario', 'nombre apellido img')
+            .populate('responsable', 'nombre apellido img')
+            .sort({ fecha: -1 });
+
+        res.json({
+            ok: true,
+            servicios
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Un error ha ocurrido'
+        });
+    }
+
+
+};
+
 const getServicio = async(req, res = response) => {
 
     const id = req.params.id;
@@ -151,5 +174,6 @@ module.exports = {
     crearServicio,
     actualizarServicio,
     borrarServicio,
-    getServicio
+    getServicio,
+    getServiciosAll
 };
