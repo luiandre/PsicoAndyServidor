@@ -187,18 +187,26 @@ const getUsuariosFiltroRol = async(req, res) => {
                 usuarios
             });
         } else if (rolUsuario == 'PROF_ROL') {
-            const asignaciones = [];
-            const asignacion = await Asignacion.find({ profesional: uid })
-                .populate('paciente', 'img rol google activo bio estado terminos conexiones _id nombre apellido email')
-                .sort({ nombre: 1 });
+            // const asignaciones = [];
+            // const asignacion = await Asignacion.find({ profesional: uid })
+            //     .populate('paciente', 'img rol google activo bio estado terminos conexiones _id nombre apellido email')
+            //     .sort({ nombre: 1 });
 
-            asignacion.forEach(item => {
-                asignaciones.push(item.paciente);
-            });
+            // asignacion.forEach(item => {
+            //     asignaciones.push(item.paciente);
+            // });
+
+            // return res.json({
+            //     ok: true,
+            //     usuarios: asignaciones
+            // });
+
+            const usuarios = await Usuario.find()
+                .sort({ nombre: 1 });
 
             return res.json({
                 ok: true,
-                usuarios: asignaciones
+                usuarios
             });
         } else {
             return res.status(400).json({
