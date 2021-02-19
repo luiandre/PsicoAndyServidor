@@ -32,7 +32,7 @@ router.get('/getUsuarioEmail/:email', getUsuarioEmail);
 
 router.get('/rol', getUsuariosRol);
 
-router.get('/rol/usuario/:rol', getUsuariosFiltroRol);
+router.get('/rol/usuario/:rol', validarJWT, getUsuariosFiltroRol);
 
 router.get('/rol/administrativos', getUsuariosAdministrativos);
 

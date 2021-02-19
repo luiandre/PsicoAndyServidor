@@ -4,6 +4,7 @@ const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const Usuario = require('../models/usuario');
+const Asignacion = require('../models/asignacion');
 const { generarJWT } = require("../helpers/jwt");
 const { getMenuFrontEnd } = require("../helpers/menu-frontend");
 
@@ -108,7 +109,6 @@ const getUsuariosAsignaciones = async(req, res) => {
             total
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
@@ -168,6 +168,7 @@ const getUsuariosAdministrativos = async(req, res) => {
 const getUsuariosFiltroRol = async(req, res) => {
 
     const rolUsuario = req.params.rol;
+    const uid = req.uid;
 
     try {
         if (rolUsuario == 'USER_ROL') {
@@ -177,13 +178,27 @@ const getUsuariosFiltroRol = async(req, res) => {
                 ok: true,
                 usuarios
             });
-        } else if (rolUsuario == 'ADMIN_ROL' || rolUsuario == 'PROF_ROL') {
+        } else if (rolUsuario == 'ADMIN_ROL') {
             const usuarios = await Usuario.find()
                 .sort({ nombre: 1 });
 
             return res.json({
                 ok: true,
                 usuarios
+            });
+        } else if (rolUsuario == 'PROF_ROL') {
+            const asignaciones = [];
+            const asignacion = await Asignacion.find({ profesional: uid })
+                .populate('paciente', 'img rol google activo bio estado terminos conexiones _id nombre apellido email')
+                .sort({ nombre: 1 });
+
+            asignacion.forEach(item => {
+                asignaciones.push(item.paciente);
+            });
+
+            return res.json({
+                ok: true,
+                usuarios: asignaciones
             });
         } else {
             return res.status(400).json({
@@ -387,7 +402,6 @@ const borrarUsuario = async(req, res = response) => {
             msg: 'Usuario eliminado'
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
@@ -428,7 +442,6 @@ const habilitarUsuario = async(req, res = response) => {
             msg: 'Usuario habilitado'
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
@@ -461,7 +474,6 @@ const terminosUsuario = async(req, res = response) => {
             msg: 'Terminos aceptados'
         });
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Un error ha ocurrido'
