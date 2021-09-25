@@ -6,7 +6,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
 
     if (rol === 'ADMIN_ROL') {
         menu = [{
-                titulo: 'PsicoAndy',
+                titulo: 'Clínica',
                 icono: 'mdi mdi-city',
                 submenu: [
                     { titulo: 'Inicio', url: '/' },
@@ -38,7 +38,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
         ];
     } else if (rol === 'PROF_ROL') {
         menu = [{
-                titulo: 'PsicoAndy',
+                titulo: 'Clínica',
                 icono: 'mdi mdi-city',
                 submenu: [
                     { titulo: 'Inicio', url: '/' },
@@ -67,7 +67,7 @@ const getMenuFrontEnd = (rol = 'USER_ROL') => {
         ];
     } else {
         menu = [{
-                titulo: 'PsicoAndy',
+                titulo: 'Clínica',
                 icono: 'mdi mdi-city',
                 submenu: [
                     { titulo: 'Inicio', url: '/' },
